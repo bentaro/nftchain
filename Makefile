@@ -1,7 +1,6 @@
 clean:
-	rm -f nft-exchangecli
-	rm -f nft-exchanged
+	rm -f nftchaincli
+	rm -f nftchaind
 install:
-	go install -mod=readonly ./cmd/nft-exchangecli
-	go install -mod=readonly ./cmd/nft-exchanged
-
+	go install ./cmd/nftchaincli
+	go install ./cmd/nftchaind

@@ -1,4 +1,8 @@
-# nftexchange
+# nftchain UI
+
+This is the [vuejs](https://vuejs.org/) user inteface to nftchain.
+
+It provides UI components including login, and a template for you to do additonal development.
 
 ## Project setup
 
