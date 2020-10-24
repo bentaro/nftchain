@@ -25,6 +25,9 @@ import (
 
 	"github.com/bentaro/nft-exchange/app"
   // this line is used by starport scaffolding
+
+  	//add nft module
+  	nft "github.com/cosmos/modules/incubator/nft/client/cli"
 )
 
 func main() {
@@ -64,6 +67,9 @@ func main() {
 		flags.LineBreak,
 		version.Cmd,
 		flags.NewCompletionCmd(rootCmd, true),
+
+		//add nft command with temporary store key
+		nft.GetTxCmd("null", cdc),
 	)
 
 	// Add flags and prefix all env exposed with AA
@@ -91,6 +97,9 @@ func queryCmd(cdc *amino.Codec) *cobra.Command {
 		authcmd.QueryTxsByEventsCmd(cdc),
 		authcmd.QueryTxCmd(cdc),
 		flags.LineBreak,
+
+		//add nft command with temporary path
+		nft.GetQueryCmd("nft", cdc),
 	)
 
 	// add modules' query commands
@@ -115,6 +124,9 @@ func txCmd(cdc *amino.Codec) *cobra.Command {
 		authcmd.GetEncodeCommand(cdc),
 		authcmd.GetDecodeCommand(cdc),
 		flags.LineBreak,
+
+		//command from nft module
+
 	)
 
 	// add modules' tx commands

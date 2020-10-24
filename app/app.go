@@ -10,6 +10,9 @@ import (
 	tmos "github.com/tendermint/tendermint/libs/os"
 	dbm "github.com/tendermint/tm-db"
 
+	"github.com/bentaro/nft-exchange/x/nftexchange"
+	nftexchangekeeper "github.com/bentaro/nft-exchange/x/nftexchange/keeper"
+	nftexchangetypes "github.com/bentaro/nft-exchange/x/nftexchange/types"
 	bam "github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/simapp"
@@ -22,10 +25,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/params"
 	"github.com/cosmos/cosmos-sdk/x/staking"
 	"github.com/cosmos/cosmos-sdk/x/supply"
-	"github.com/bentaro/nft-exchange/x/nftexchange"
-	nftexchangekeeper "github.com/bentaro/nft-exchange/x/nftexchange/keeper"
-	nftexchangetypes "github.com/bentaro/nft-exchange/x/nftexchange/types"
-  // this line is used by starport scaffolding
+	//nft module
+	"github.com/cosmos/modules/incubator/nft"
 )
 
 const appName = "nftexchange"
@@ -40,6 +41,8 @@ var (
 		staking.AppModuleBasic{},
 		params.AppModuleBasic{},
 		supply.AppModuleBasic{},
+		//add nft module basic
+		nft.AppModuleBasic{},
 		nftexchange.AppModuleBasic{},
     // this line is used by starport scaffolding # 2
 	)
@@ -77,6 +80,9 @@ type NewApp struct {
 	stakingKeeper  staking.Keeper
 	supplyKeeper   supply.Keeper
 	paramsKeeper   params.Keeper
+	//add nft keeper
+	nftKeeper      nft.Keeper
+
 	nftexchangeKeeper nftexchangekeeper.Keeper
   // this line is used by starport scaffolding # 3
 	mm *module.Manager
@@ -100,8 +106,10 @@ func NewInitApp(
     bam.MainStoreKey,
     auth.StoreKey,
     staking.StoreKey,
-		supply.StoreKey,
+    supply.StoreKey,
     params.StoreKey,
+    //add nft store key
+    nft.StoreKey,
     nftexchangetypes.StoreKey,
     // this line is used by starport scaffolding # 5
   )
@@ -153,12 +161,17 @@ func NewInitApp(
 	app.stakingKeeper = *stakingKeeper.SetHooks(
 		staking.NewMultiStakingHooks(),
 	)
+	//instanciate nft keeper
+	app.nftKeeper = nft.NewKeeper(
+		app.cdc,
+		keys[nft.StoreKey],
+		)
 
 	app.nftexchangeKeeper = nftexchangekeeper.NewKeeper(
 		app.bankKeeper,
 		app.cdc,
 		keys[nftexchangetypes.StoreKey],
-	)
+		)
 
   // this line is used by starport scaffolding # 4
 
@@ -169,6 +182,8 @@ func NewInitApp(
 		supply.NewAppModule(app.supplyKeeper, app.accountKeeper),
 		nftexchange.NewAppModule(app.nftexchangeKeeper, app.bankKeeper),
 		staking.NewAppModule(app.stakingKeeper, app.accountKeeper, app.supplyKeeper),
+		//add nft new app module
+		nft.NewAppModule(app.nftKeeper, app.accountKeeper),
     // this line is used by starport scaffolding # 6
 	)
 
@@ -178,6 +193,7 @@ func NewInitApp(
 		staking.ModuleName,
 		auth.ModuleName,
 		bank.ModuleName,
+		nft.ModuleName,
 		nftexchangetypes.ModuleName,
 		supply.ModuleName,
 		genutil.ModuleName,
