@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	wasmTypes "github.com/CosmWasm/go-cosmwasm/types"
+	wasmTypes "github.com/bentaro/nftchain/x/go-cosmwasm/types"
 	"github.com/bentaro/nftchain/x/wasm/internal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
