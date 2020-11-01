@@ -33,7 +33,7 @@ type CustomEncoder func(sender sdk.AccAddress, msg json.RawMessage) ([]sdk.Msg, 
 type StakingEncoder func(sender sdk.AccAddress, msg *wasmTypes.StakingMsg) ([]sdk.Msg, error)
 type WasmEncoder func(sender sdk.AccAddress, msg *wasmTypes.WasmMsg) ([]sdk.Msg, error)
 //encoder for nft modules
-type NFTEncoder func(sender sdk.AccAddress, msg *wasmTypes.NftMsg) ([]sdk.Msg, error)
+type NFTEncoder func(sender sdk.AccAddress, msg *wasmTypes.NFTMsg) ([]sdk.Msg, error)
 
 type MessageEncoders struct {
 	Bank    BankEncoder
@@ -237,7 +237,7 @@ func EncodeWasmMsg(sender sdk.AccAddress, msg *wasmTypes.WasmMsg) ([]sdk.Msg, er
 	return nil, sdkerrors.Wrap(types.ErrInvalidMsg, "Unknown variant of Wasm")
 }
 
-func EncodeNFTMsg(sender sdk.AccAddress, msg *wasmTypes.NftMsg) ([]sdk.Msg, error) {
+func EncodeNFTMsg(sender sdk.AccAddress, msg *wasmTypes.NFTMsg) ([]sdk.Msg, error) {
 	if msg.Transfer == nil {
 		return nil, sdkerrors.Wrap(types.ErrInvalidMsg, "Unknown variant of Bank")
 	}

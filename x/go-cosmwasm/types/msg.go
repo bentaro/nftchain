@@ -68,7 +68,7 @@ type CosmosMsg struct {
 	Custom  json.RawMessage `json:"custom,omitempty"`
 	Staking *StakingMsg     `json:"staking,omitempty"`
 	Wasm    *WasmMsg        `json:"wasm,omitempty"`
-	NFT		*NftMsg			`json:"nft,omitempty"`
+	NFT		*NFTMsg			`json:"nft,omitempty"`
 }
 
 type BankMsg struct {
@@ -145,7 +145,7 @@ type InstantiateMsg struct {
 	Send Coins `json:"send"`
 }
 
-type NftMsg struct {
+type NFTMsg struct {
 	Transfer   *TransferMsg   `json:"transfer,omitempty"`
 	Mint *MintMsg `json:"mint,omitempty"`
 	Burn *BurnMsg `json:"burn,omitempty"`
