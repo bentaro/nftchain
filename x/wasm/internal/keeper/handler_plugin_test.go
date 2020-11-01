@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"testing"
 
-	wasmTypes "github.com/CosmWasm/go-cosmwasm/types"
+	wasmTypes "github.com/bentaro/nftchain/x/go-cosmwasm/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/bank"
 )

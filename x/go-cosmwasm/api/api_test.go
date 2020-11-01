@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/CosmWasm/go-cosmwasm/types"
+	"github.com/bentaro/nftchain/x/go-cosmwasm/types"
 )
 
 func TestCanonicalAddressFailure(t *testing.T) {

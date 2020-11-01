@@ -1,4 +1,4 @@
-module github.com/CosmWasm/go-cosmwasm
+module github.com/bentaro/nftchain/x/go-cosmwasm
 
 go 1.14
 

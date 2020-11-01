@@ -2,7 +2,7 @@ package keeper
 
 import (
 	"encoding/json"
-	wasmTypes "github.com/CosmWasm/go-cosmwasm/types"
+	wasmTypes "github.com/bentaro/nftchain/x/go-cosmwasm/types"
 	"github.com/cosmos/cosmos-sdk/x/auth"
 	"github.com/cosmos/cosmos-sdk/x/distribution"
 	"github.com/cosmos/cosmos-sdk/x/staking"

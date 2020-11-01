@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	wasm "github.com/CosmWasm/go-cosmwasm"
+	wasm "github.com/bentaro/nftchain/x/go-cosmwasm"
 	"io/ioutil"
 	"os"
 )

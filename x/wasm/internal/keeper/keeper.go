@@ -10,8 +10,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/staking"
 	"github.com/pkg/errors"
 
-	wasm "github.com/CosmWasm/go-cosmwasm"
-	wasmTypes "github.com/CosmWasm/go-cosmwasm/types"
+	wasm "github.com/bentaro/nftchain/x/go-cosmwasm"
+	wasmTypes "github.com/bentaro/nftchain/x/go-cosmwasm/types"
 	"github.com/bentaro/nftchain/x/wasm/internal/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
