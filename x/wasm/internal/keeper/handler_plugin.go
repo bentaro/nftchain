@@ -249,8 +249,8 @@ func EncodeNFTMsg(sender sdk.AccAddress, msg NFTMsg) ([]sdk.Msg, error) {
 	if stderr != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Transfer.Recipient)
 	}
-	denom := msg.Transfer.NFTMsg.Denom
-	id := msg.Transfer.NFTMsg.ID
+	denom := msg.Transfer.Denom
+	id := msg.Transfer.ID
 
 	sdkMsg := nft.MsgTransferNFT{
 		Sender: sender,

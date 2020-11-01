@@ -68,6 +68,7 @@ type CosmosMsg struct {
 	Custom  json.RawMessage `json:"custom,omitempty"`
 	Staking *StakingMsg     `json:"staking,omitempty"`
 	Wasm    *WasmMsg        `json:"wasm,omitempty"`
+	NFT		*NFTMsg			`json:"nft,omitempty"`
 }
 
 type BankMsg struct {
@@ -142,4 +143,29 @@ type InstantiateMsg struct {
 	Msg []byte `json:"msg"`
 	// Send is an optional amount of coins this contract sends to the called contract
 	Send Coins `json:"send"`
+}
+
+type NFTMsg struct {
+	Transfer   *TransferMsg   `json:"transfer,omitempty"`
+	Mint *MintMsg `json:"mint,omitempty"`
+	Burn *BurnMsg `json:"burn,omitempty"`
+}
+
+type TransferMsg struct {
+	Sender string `json:"sender"`
+	Recipient string `json:"recipient"`
+	Denom string `json:"denom"`
+	ID string `json:"id"`
+}
+
+type MintMsg struct {
+	Sender string `json:"sender"`
+	Recipient string `json:"recipient"`
+	Denom string `json:"denom"`
+	ID string `json:"id"`
+	TokenURI string `json:"token_uri"`
+}
+
+type BurnMsg struct {
+	Sender string `json:"sender"`
 }
