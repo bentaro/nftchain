@@ -2,6 +2,7 @@ package app
 
 import (
 	"encoding/json"
+	"github.com/bentaro/nftchain/x/wasm"
 	"io"
 	"os"
 
@@ -27,7 +28,6 @@ import (
 	nftchaintypes "github.com/bentaro/nftchain/x/nftchain/types"
     // this line is used by starport scaffolding # 1
     "path/filepath"
-	"github.com/CosmWasm/wasmd/x/wasm"
 	"github.com/tendermint/tendermint/libs/cli"
 	"github.com/spf13/viper"
 	distr "github.com/cosmos/cosmos-sdk/x/distribution"

@@ -3,7 +3,7 @@ module github.com/bentaro/nftchain
 go 1.15
 
 require (
-	github.com/CosmWasm/wasmd v0.11.0
+	github.com/bentaro/nftchain v0.11.0
 	github.com/cosmos/cosmos-sdk v0.39.1
 	github.com/cosmos/modules/incubator/nft v0.0.0-20200715075539-8c1862235a75
 	github.com/golang/mock v1.4.3 // indirect

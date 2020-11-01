@@ -25,7 +25,7 @@ import (
 
 	"github.com/bentaro/nftchain/app"
   	// this line is used by starport scaffolding # 1
-	wasmrest "github.com/CosmWasm/wasmd/x/wasm/client/rest"
+	wasmrest "github.com/bentaro/nftchain/x/wasm/client/rest"
 
 	//add nft module
 	nft "github.com/cosmos/modules/incubator/nft/client/cli"
