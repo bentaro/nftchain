@@ -3,6 +3,7 @@ package keeper
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	wasmTypes "github.com/CosmWasm/go-cosmwasm/types"
 	"github.com/bentaro/nftchain/x/wasm/internal/types"
@@ -11,6 +12,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/bank"
 	"github.com/cosmos/cosmos-sdk/x/distribution"
 	"github.com/cosmos/cosmos-sdk/x/staking"
+	"github.com/cosmos/modules/incubator/nft"
 )
 
 type MessageHandler struct {
@@ -30,12 +32,15 @@ type BankEncoder func(sender sdk.AccAddress, msg *wasmTypes.BankMsg) ([]sdk.Msg,
 type CustomEncoder func(sender sdk.AccAddress, msg json.RawMessage) ([]sdk.Msg, error)
 type StakingEncoder func(sender sdk.AccAddress, msg *wasmTypes.StakingMsg) ([]sdk.Msg, error)
 type WasmEncoder func(sender sdk.AccAddress, msg *wasmTypes.WasmMsg) ([]sdk.Msg, error)
+//encoder for nft modules
+type NFTEncoder func(sender sdk.AccAddress, msg *wasmTypes.NFTMsg) ([]sdk.Msg, error)
 
 type MessageEncoders struct {
 	Bank    BankEncoder
 	Custom  CustomEncoder
 	Staking StakingEncoder
 	Wasm    WasmEncoder
+	NFT NFTEncoder
 }
 
 func DefaultEncoders() MessageEncoders {
@@ -44,6 +49,7 @@ func DefaultEncoders() MessageEncoders {
 		Custom:  NoCustomMsg,
 		Staking: EncodeStakingMsg,
 		Wasm:    EncodeWasmMsg,
+		NFT:	 EncodeNFTMsg,
 	}
 }
 
@@ -76,6 +82,8 @@ func (e MessageEncoders) Encode(contractAddr sdk.AccAddress, msg wasmTypes.Cosmo
 		return e.Staking(contractAddr, msg.Staking)
 	case msg.Wasm != nil:
 		return e.Wasm(contractAddr, msg.Wasm)
+	case msg.NFT != nil:
+		return e.NFT(contractAddr, msg.NFT)
 	}
 	return nil, sdkerrors.Wrap(types.ErrInvalidMsg, "Unknown variant of Wasm")
 }
@@ -227,6 +235,30 @@ func EncodeWasmMsg(sender sdk.AccAddress, msg *wasmTypes.WasmMsg) ([]sdk.Msg, er
 		return []sdk.Msg{sdkMsg}, nil
 	}
 	return nil, sdkerrors.Wrap(types.ErrInvalidMsg, "Unknown variant of Wasm")
+}
+
+func EncodeNFTMsg(sender sdk.AccAddress, msg NFTMsg) ([]sdk.Msg, error) {
+	if msg.Transfer == nil {
+		return nil, sdkerrors.Wrap(types.ErrInvalidMsg, "Unknown variant of Bank")
+	}
+	sender, stderr := sdk.AccAddressFromBech32(msg.Transfer.Sender)
+	if stderr != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Transfer.Sender)
+	}
+	recipient, stderr := sdk.AccAddressFromBech32(msg.Transfer.Recipient)
+	if stderr != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Transfer.Recipient)
+	}
+	denom := msg.Transfer.NFTMsg.Denom
+	id := msg.Transfer.NFTMsg.ID
+
+	sdkMsg := nft.MsgTransferNFT{
+		Sender: sender,
+		Recipient: recipient,
+		Denom: strings.TrimSpace(denom),
+		ID: strings.TrimSpace(id),
+	}
+	return []sdk.Msg{sdkMsg}, nil
 }
 
 func (h MessageHandler) Dispatch(ctx sdk.Context, contractAddr sdk.AccAddress, msg wasmTypes.CosmosMsg) error {
