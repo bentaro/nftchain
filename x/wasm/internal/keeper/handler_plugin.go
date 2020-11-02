@@ -252,7 +252,7 @@ func EncodeNftMsg(sender sdk.AccAddress, msg *wasmTypes.NftMsg) ([]sdk.Msg, erro
 	denom := msg.Transfer.Denom
 	id := msg.Transfer.ID
 
-	sdkMsg := nft.MsgTransferNft{
+	sdkMsg := nft.MsgTransferNFT{
 		Sender: sender,
 		Recipient: recipient,
 		Denom: strings.TrimSpace(denom),
