@@ -1,6 +1,6 @@
 package types
 
-type NFTMsg struct {
+type NftMsg struct {
 	Transfer   *TransferMsg   `json:"transfer,omitempty"`
 	Mint *MintMsg `json:"mint,omitempty"`
 	Burn *BurnMsg `json:"burn,omitempty"`

@@ -33,14 +33,14 @@ type CustomEncoder func(sender sdk.AccAddress, msg json.RawMessage) ([]sdk.Msg, 
 type StakingEncoder func(sender sdk.AccAddress, msg *wasmTypes.StakingMsg) ([]sdk.Msg, error)
 type WasmEncoder func(sender sdk.AccAddress, msg *wasmTypes.WasmMsg) ([]sdk.Msg, error)
 //encoder for nft modules
-type NFTEncoder func(sender sdk.AccAddress, msg *wasmTypes.NFTMsg) ([]sdk.Msg, error)
+type NftEncoder func(sender sdk.AccAddress, msg *wasmTypes.NftMsg) ([]sdk.Msg, error)
 
 type MessageEncoders struct {
 	Bank    BankEncoder
 	Custom  CustomEncoder
 	Staking StakingEncoder
 	Wasm    WasmEncoder
-	NFT NFTEncoder
+	Nft NftEncoder
 }
 
 func DefaultEncoders() MessageEncoders {
@@ -49,7 +49,7 @@ func DefaultEncoders() MessageEncoders {
 		Custom:  NoCustomMsg,
 		Staking: EncodeStakingMsg,
 		Wasm:    EncodeWasmMsg,
-		NFT:	 EncodeNFTMsg,
+		Nft:	 EncodeNftMsg,
 	}
 }
 
@@ -82,8 +82,8 @@ func (e MessageEncoders) Encode(contractAddr sdk.AccAddress, msg wasmTypes.Cosmo
 		return e.Staking(contractAddr, msg.Staking)
 	case msg.Wasm != nil:
 		return e.Wasm(contractAddr, msg.Wasm)
-	case msg.NFT != nil:
-		return e.NFT(contractAddr, msg.NFT)
+	case msg.Nft != nil:
+		return e.Nft(contractAddr, msg.Nft)
 	}
 	return nil, sdkerrors.Wrap(types.ErrInvalidMsg, "Unknown variant of Wasm")
 }
@@ -237,7 +237,7 @@ func EncodeWasmMsg(sender sdk.AccAddress, msg *wasmTypes.WasmMsg) ([]sdk.Msg, er
 	return nil, sdkerrors.Wrap(types.ErrInvalidMsg, "Unknown variant of Wasm")
 }
 
-func EncodeNFTMsg(sender sdk.AccAddress, msg *wasmTypes.NFTMsg) ([]sdk.Msg, error) {
+func EncodeNftMsg(sender sdk.AccAddress, msg *wasmTypes.NftMsg) ([]sdk.Msg, error) {
 	if msg.Transfer == nil {
 		return nil, sdkerrors.Wrap(types.ErrInvalidMsg, "Unknown variant of Bank")
 	}
@@ -252,7 +252,7 @@ func EncodeNFTMsg(sender sdk.AccAddress, msg *wasmTypes.NFTMsg) ([]sdk.Msg, erro
 	denom := msg.Transfer.Denom
 	id := msg.Transfer.ID
 
-	sdkMsg := nft.MsgTransferNFT{
+	sdkMsg := nft.MsgTransferNft{
 		Sender: sender,
 		Recipient: recipient,
 		Denom: strings.TrimSpace(denom),
