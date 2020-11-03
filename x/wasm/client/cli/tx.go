@@ -238,5 +238,6 @@ func ExecuteContractCmd(cdc *codec.Codec) *cobra.Command {
 	}
 
 	cmd.Flags().String(flagAmount, "", "Coins to send to the contract along with command")
+	cmd.Flags().String(flagNft, "", "NFT to send to the contract along with command")
 	return cmd
 }

@@ -59,6 +59,8 @@ github.com/bentaro/nftchain/x/go-cosmwasm v0.0.0-20201103043621-15b096c6913c h1:
 github.com/bentaro/nftchain/x/go-cosmwasm v0.0.0-20201103043621-15b096c6913c/go.mod h1:O4tPMjFmpWR/QRfQtwCQ72YzMFKJGDziSnJioYTeXmA=
 github.com/bentaro/nftchain/x/go-cosmwasm v0.0.0-20201103053714-08432cdb0d3d h1:Iv/ly+ac0dhQM4i4VlJ1PR7lIHYf6v84w4yu0ffBDts=
 github.com/bentaro/nftchain/x/go-cosmwasm v0.0.0-20201103053714-08432cdb0d3d/go.mod h1:O4tPMjFmpWR/QRfQtwCQ72YzMFKJGDziSnJioYTeXmA=
+github.com/bentaro/nftchain/x/go-cosmwasm v0.0.0-20201103063435-ee505a878b8e h1:KgEo4H20/v90Lia6vaSDox5unfna+rC8kKo9mxAWa98=
+github.com/bentaro/nftchain/x/go-cosmwasm v0.0.0-20201103063435-ee505a878b8e/go.mod h1:O4tPMjFmpWR/QRfQtwCQ72YzMFKJGDziSnJioYTeXmA=
 github.com/bentaro/nftchain/x/go-cosmwasm v0.11.0 h1:H+7Xzh2tEquJXuP4q1VN7ekdheAQvCjD4FRmlPqcXnQ=
 github.com/bentaro/nftchain/x/go-cosmwasm v0.11.0/go.mod h1:gAFCwllx97ejI+m9SqJQrmd2SBW7HA0fOjvWWJjM2uc=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=
