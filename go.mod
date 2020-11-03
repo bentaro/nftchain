@@ -3,7 +3,7 @@ module github.com/bentaro/nftchain
 go 1.15
 
 require (
-	github.com/bentaro/nftchain/x/go-cosmwasm v0.0.0-20201103043621-15b096c6913c
+	github.com/bentaro/nftchain/x/go-cosmwasm v0.0.0-20201103053714-08432cdb0d3d
 	github.com/cosmos/cosmos-sdk v0.39.1
 	github.com/cosmos/modules/incubator/nft v0.0.0-20200715075539-8c1862235a75
 	github.com/golang/mock v1.4.3 // indirect
@@ -13,7 +13,7 @@ require (
 	github.com/onsi/ginkgo v1.8.0 // indirect
 	github.com/onsi/gomega v1.5.0 // indirect
 	github.com/pkg/errors v0.9.1
-	github.com/spf13/afero v1.2.2 // indirect
+	github.com/spf13/afero v1.2.2
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.7.0

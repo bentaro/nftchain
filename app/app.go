@@ -214,7 +214,7 @@ type WasmWrapper struct { Wasm wasm.Config `mapstructure:"wasm"`}
 		wasmConfig := wasmWrap.Wasm
 		supportedFeatures := "staking"
 		app.subspaces[wasm.ModuleName] = app.paramsKeeper.Subspace(wasm.DefaultParamspace)
-		app.wasmKeeper = wasm.NewKeeper(app.cdc, keys[wasm.StoreKey], app.subspaces[wasm.ModuleName], app.accountKeeper, app.bankKeeper, app.stakingKeeper, app.distrKeeper, wasmRouter, wasmDir, wasmConfig, supportedFeatures, nil, nil)
+		app.wasmKeeper = wasm.NewKeeper(app.cdc, keys[wasm.StoreKey], app.subspaces[wasm.ModuleName], app.accountKeeper, app.bankKeeper, app.stakingKeeper, app.distrKeeper, app.nftKeeper, wasmRouter, wasmDir, wasmConfig, supportedFeatures, nil, nil)
 
 	app.mm = module.NewManager(
 		genutil.NewAppModule(app.accountKeeper, app.stakingKeeper, app.BaseApp.DeliverTx),

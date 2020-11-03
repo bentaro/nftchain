@@ -25,6 +25,8 @@ import (
 
 const (
 	flagAmount                 = "amount"
+	//flag for NFT
+	flagNft                    = "nft"
 	flagSource                 = "source"
 	flagBuilder                = "builder"
 	flagLabel                  = "label"
@@ -218,8 +220,8 @@ func ExecuteContractCmd(cdc *codec.Codec) *cobra.Command {
 				return err
 			}
 
-			nftStr := viper.GetString("NFT")
-			nft, err := gowasmtypes.ParseNFT(nftStr)
+			nftStr := viper.GetString(flagNft)
+			nft, err := gowasmtypes.ParseNft(nftStr)
 
 			execMsg := args[1]
 
@@ -228,7 +230,7 @@ func ExecuteContractCmd(cdc *codec.Codec) *cobra.Command {
 				Sender:    cliCtx.GetFromAddress(),
 				Contract:  contractAddr,
 				SentFunds: amount,
-				SenfNfts:  nft,
+				SentNfts:  nft,
 				Msg:       []byte(execMsg),
 			}
 			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
