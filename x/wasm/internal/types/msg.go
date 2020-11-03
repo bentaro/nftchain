@@ -2,6 +2,7 @@ package types
 
 import (
 	"encoding/json"
+	"github.com/bentaro/nftchain/x/go-cosmwasm/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -118,6 +119,8 @@ type MsgExecuteContract struct {
 	Contract  sdk.AccAddress  `json:"contract" yaml:"contract"`
 	Msg       json.RawMessage `json:"msg" yaml:"msg"`
 	SentFunds sdk.Coins       `json:"sent_funds" yaml:"sent_funds"`
+	//data for sending NFT
+	SentNfts   types.Sentnfts   `json:"sent_nfts" yaml:"sent_nfts"`
 }
 
 func (msg MsgExecuteContract) Route() string {

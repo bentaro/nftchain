@@ -21,6 +21,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/bank"
 	"github.com/cosmos/cosmos-sdk/x/params"
 	"github.com/tendermint/tendermint/crypto"
+	"github.com/cosmos/modules/incubator/nft"
 )
 
 // GasMultiplier is how many cosmwasm gas points = 1 sdk gas point
@@ -49,6 +50,7 @@ type Keeper struct {
 	cdc           *codec.Codec
 	accountKeeper auth.AccountKeeper
 	bankKeeper    bank.Keeper
+	nftKeeper     nft.Keeper
 
 	wasmer       wasm.Wasmer
 	queryPlugins QueryPlugins
@@ -62,7 +64,7 @@ type Keeper struct {
 // NewKeeper creates a new contract Keeper instance
 // If customEncoders is non-nil, we can use this to override some of the message handler, especially custom
 func NewKeeper(cdc *codec.Codec, storeKey sdk.StoreKey, paramSpace params.Subspace, accountKeeper auth.AccountKeeper, bankKeeper bank.Keeper,
-	stakingKeeper staking.Keeper, distKeeper distribution.Keeper,
+	stakingKeeper staking.Keeper, distKeeper distribution.Keeper, nftKeeper nft.Keeper,
 	router sdk.Router, homeDir string, wasmConfig types.WasmConfig, supportedFeatures string, customEncoders *MessageEncoders, customPlugins *QueryPlugins) Keeper {
 	wasmer, err := wasm.NewWasmer(filepath.Join(homeDir, "wasm"), supportedFeatures)
 	if err != nil {
@@ -80,6 +82,7 @@ func NewKeeper(cdc *codec.Codec, storeKey sdk.StoreKey, paramSpace params.Subspa
 		wasmer:        *wasmer,
 		accountKeeper: accountKeeper,
 		bankKeeper:    bankKeeper,
+		nftKeeper:	   nftKeeper,
 		messenger:     NewMessageHandler(router, customEncoders),
 		queryGasLimit: wasmConfig.SmartQueryGasLimit,
 		authZPolicy:   DefaultAuthorizationPolicy{},
@@ -253,7 +256,7 @@ func (k Keeper) instantiate(ctx sdk.Context, codeID uint64, creator, admin sdk.A
 }
 
 // Execute executes the contract instance
-func (k Keeper) Execute(ctx sdk.Context, contractAddress sdk.AccAddress, caller sdk.AccAddress, msg []byte, coins sdk.Coins) (*sdk.Result, error) {
+func (k Keeper) Execute(ctx sdk.Context, contractAddress sdk.AccAddress, caller sdk.AccAddress, msg []byte, coins sdk.Coins, NFTs wasmTypes.Sentnfts) (*sdk.Result, error) {
 	ctx.GasMeter().ConsumeGas(InstanceCost, "Loading CosmWasm module: execute")
 
 	codeInfo, prefixStore, err := k.contractInstance(ctx, contractAddress)
@@ -269,6 +272,16 @@ func (k Keeper) Execute(ctx sdk.Context, contractAddress sdk.AccAddress, caller 
 
 		sdkerr := k.bankKeeper.SendCoins(ctx, caller, contractAddress, coins)
 		if sdkerr != nil {
+			return nil, sdkerr
+		}
+	}
+
+	//check if NFT sent
+	if !NFTs.Empty() {
+		denom := NFTs[0].Denom
+		id := NFTs[0].Id
+		sdkerr := k.nftKeeper.SwapOwners(ctx, denom, id, caller, contractAddress)
+		if sdkerr != nil{
 			return nil, sdkerr
 		}
 	}
