@@ -20,6 +20,7 @@ import (
 
 	wasmUtils "github.com/bentaro/nftchain/x/wasm/client/utils"
 	"github.com/bentaro/nftchain/x/wasm/internal/types"
+	gowasmtypes "github.com/bentaro/nftchain/x/go-cosmwasm/types"
 )
 
 const (
@@ -217,6 +218,9 @@ func ExecuteContractCmd(cdc *codec.Codec) *cobra.Command {
 				return err
 			}
 
+			nftStr := viper.GetString("NFT")
+			nft, err := gowasmtypes.ParseNFT(nftStr)
+
 			execMsg := args[1]
 
 			// build and sign the transaction, then broadcast to Tendermint
@@ -224,6 +228,7 @@ func ExecuteContractCmd(cdc *codec.Codec) *cobra.Command {
 				Sender:    cliCtx.GetFromAddress(),
 				Contract:  contractAddr,
 				SentFunds: amount,
+				SenfNfts:  nft,
 				Msg:       []byte(execMsg),
 			}
 			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
