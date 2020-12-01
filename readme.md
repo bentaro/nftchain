@@ -5,24 +5,8 @@
 ## Get started
 
 ```
-starport serve
+nftchaind start
 ```
-
-`serve` command installs dependencies, initializes and runs the application.
-
-## Configure
-
-Initialization parameters of your app are stored in `config.yml`.
-
-### `accounts`
-
-A list of user accounts created during genesis of your application.
-
-| Key   | Required | Type            | Description                                       |
-| ----- | -------- | --------------- | ------------------------------------------------- |
-| name  | Y        | String          | Local name of the key pair                        |
-| coins | Y        | List of Strings | Initial coins with denominations (e.g. "100coin") |
-
 ## CLI commands
 
 ### General
@@ -55,4 +39,19 @@ Transfer NFT
 
 ### Contract
 
+Deploy contract to the network 
 
+```nftchaincli tx wasm store contract.wasm --from <transactor address>```
+
+Instantiate contract
+
+```nftchaincli tx wasm instantiate <contract index> <constructor members (ex. "{\"denom\": \"token\"}") > --from <transactor address> --label <unique label string>```
+
+
+Query contract
+
+```nftchaincli query wasm contract-state smart <contract address> <query json (ex. "{\"config\": {}}") >```
+
+Execute Contract
+
+```nftchaincli tx wasm execute <contract address> <query json (ex. "{\"create_poll\": {\"quorum_percentage\": 0,\"description\": \"first poll\",\"start_height\": 1,\"end_height\": 6000}}")> --from <transactor address>```
