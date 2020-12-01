@@ -23,9 +23,36 @@ A list of user accounts created during genesis of your application.
 | name  | Y        | String          | Local name of the key pair                        |
 | coins | Y        | List of Strings | Initial coins with denominations (e.g. "100coin") |
 
-## Learn more
+## CLI commands
 
-- [Starport](https://github.com/tendermint/starport)
-- [Cosmos SDK documentation](https://docs.cosmos.network)
-- [Cosmos Tutorials](https://tutorials.cosmos.network)
-- [Channel on Discord](https://discord.gg/W8trcGV)
+### General
+
+Show all accounts in local device
+
+```nftchaincli keys list```
+
+Query account balance
+
+```nftchaincli query account <account address>```
+
+Send token
+
+```nftchaincli tx send <sender address> <recipient address> <amount||denom(ex. 100token)>```
+
+Query transaction detail
+
+```nftchaincli query tx <transaction hash>```
+ 
+### NFT
+
+Mint NFT
+
+```nftchaincli tx nft mint <nft denom> <NFT address> <recipient address> --from <transactor address>```
+
+Transfer NFT
+
+```nftchaincli tx nft transfer <sender address> <recipient address> <nft denom> <NFT address> --from <transactor address>```
+
+### Contract
+
+
