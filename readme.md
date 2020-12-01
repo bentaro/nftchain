@@ -37,6 +37,18 @@ Transfer NFT
 
 ```nftchaincli tx nft transfer <sender address> <recipient address> <nft denom> <NFT address> --from <transactor address>```
 
+Query NFTs by owner
+
+```nftchaincli query nft <owner address>```
+
+Show all denoms in Network
+
+```nftchaincli query nft denoms```
+ 
+Query token info
+
+```nftchaincli query nft token <denom> <NFT address>```
+
 ### Contract
 
 Deploy contract to the network 
