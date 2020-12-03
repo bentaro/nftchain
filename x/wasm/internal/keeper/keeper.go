@@ -280,9 +280,14 @@ func (k Keeper) Execute(ctx sdk.Context, contractAddress sdk.AccAddress, caller 
 	if !NFTs.Empty() {
 		denom := NFTs[0].Denom
 		id := NFTs[0].Id
-		sdkerr := k.nftKeeper.SwapOwners(ctx, denom, id, caller, contractAddress)
-		if sdkerr != nil{
-			return nil, sdkerr
+		nft, err := k.nftKeeper.GetNFT(ctx, denom, id)
+		if err != nil{
+			return nil, err
+		}
+		nft.SetOwner(contractAddress)
+		err = k.nftKeeper.UpdateNFT(ctx, denom, nft)
+		if err != nil {
+			return nil, err
 		}
 	}
 
