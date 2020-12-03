@@ -53,7 +53,7 @@ Query token info
 
 Deploy contract to the network 
 
-```nftchaincli tx wasm store contract.wasm --from <transactor address>```
+```nftchaincli tx wasm store contract.wasm --from <transactor address> --gas=10000000 ```
 
 Instantiate contract
 
