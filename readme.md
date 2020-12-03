@@ -39,7 +39,7 @@ Transfer NFT
 
 Query NFTs by owner
 
-```nftchaincli query nft <owner address>```
+```nftchaincli query nft owner <owner address>```
 
 Show all denoms in Network
 
@@ -53,7 +53,7 @@ Query token info
 
 Deploy contract to the network 
 
-```nftchaincli tx wasm store contract.wasm --from <transactor address>```
+```nftchaincli tx wasm store contract.wasm --from <transactor address> --gas=10000000 ```
 
 Instantiate contract
 
