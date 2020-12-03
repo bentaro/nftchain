@@ -39,7 +39,7 @@ Transfer NFT
 
 Query NFTs by owner
 
-```nftchaincli query nft <owner address>```
+```nftchaincli query nft owner <owner address>```
 
 Show all denoms in Network
 
