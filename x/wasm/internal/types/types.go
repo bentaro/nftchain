@@ -6,7 +6,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	tmBytes "github.com/tendermint/tendermint/libs/bytes"
 
-	wasmTypes "github.com/bentaro/nftchain/x/go-cosmwasm/types"
+	 wasmTypes "github.com/bentaro/nftchain/x/go-cosmwasm/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
@@ -213,10 +213,12 @@ func NewEnv(ctx sdk.Context, contractAddr sdk.AccAddress) wasmTypes.Env {
 }
 
 // NewInfo initializes the MessageInfo for a contract instance
+// add additional nft info if necessary
 func NewInfo(creator sdk.AccAddress, deposit sdk.Coins) wasmTypes.MessageInfo {
 	return wasmTypes.MessageInfo{
 		Sender:    creator.String(),
 		SentFunds: NewWasmCoins(deposit),
+		SentNfts: wasmTypes.Sentnfts{},
 	}
 }
 

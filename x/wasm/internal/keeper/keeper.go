@@ -172,11 +172,11 @@ func (k Keeper) importCode(ctx sdk.Context, codeID uint64, codeInfo types.CodeIn
 }
 
 // Instantiate creates an instance of a WASM contract
-func (k Keeper) Instantiate(ctx sdk.Context, codeID uint64, creator, admin sdk.AccAddress, initMsg []byte, label string, deposit sdk.Coins) (sdk.AccAddress, error) {
-	return k.instantiate(ctx, codeID, creator, admin, initMsg, label, deposit, k.authZPolicy)
+func (k Keeper) Instantiate(ctx sdk.Context, codeID uint64, creator, admin sdk.AccAddress, initMsg []byte, label string, deposit sdk.Coins, nft wasmTypes.Sentnfts) (sdk.AccAddress, error) {
+	return k.instantiate(ctx, codeID, creator, admin, initMsg, label, deposit, nft, k.authZPolicy)
 }
 
-func (k Keeper) instantiate(ctx sdk.Context, codeID uint64, creator, admin sdk.AccAddress, initMsg []byte, label string, deposit sdk.Coins, authZ AuthorizationPolicy) (sdk.AccAddress, error) {
+func (k Keeper) instantiate(ctx sdk.Context, codeID uint64, creator, admin sdk.AccAddress, initMsg []byte, label string, deposit sdk.Coins, nft wasmTypes.Sentnfts, authZ AuthorizationPolicy) (sdk.AccAddress, error) {
 	ctx.GasMeter().ConsumeGas(InstanceCost, "Loading CosmWasm module: init")
 
 	// create contract address
@@ -217,6 +217,7 @@ func (k Keeper) instantiate(ctx sdk.Context, codeID uint64, creator, admin sdk.A
 
 	// prepare params for contract instantiate call
 	env := types.NewEnv(ctx, contractAddress)
+	// add nft option if necessary
 	info := types.NewInfo(creator, deposit)
 
 	// create prefixed data store

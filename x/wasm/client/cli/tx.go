@@ -191,6 +191,7 @@ func parseInstantiateArgs(args []string, cliCtx context.CLIContext) (types.MsgIn
 		CodeID:    codeID,
 		Label:     label,
 		InitFunds: amount,
+		InitNfts: gowasmtypes.Sentnfts{},
 		InitMsg:   []byte(initMsg),
 		Admin:     adminAddr,
 	}

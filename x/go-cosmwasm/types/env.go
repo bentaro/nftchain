@@ -27,6 +27,8 @@ type MessageInfo struct {
 	Sender HumanAddress `json:"sender"`
 	// amount of funds send to the contract along with this message
 	SentFunds Coins `json:"sent_funds"`
+	// amount of nftss send to the contract along with this message
+	SentNfts Sentnfts `json:"sent_nfts"`
 }
 
 type ContractInfo struct {

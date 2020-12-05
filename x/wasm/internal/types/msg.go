@@ -68,6 +68,7 @@ type MsgInstantiateContract struct {
 	Label     string          `json:"label" yaml:"label"`
 	InitMsg   json.RawMessage `json:"init_msg" yaml:"init_msg"`
 	InitFunds sdk.Coins       `json:"init_funds" yaml:"init_funds"`
+	InitNfts types.Sentnfts   `json:"sent_nfts" yaml:"sent_nfts"`
 }
 
 func (msg MsgInstantiateContract) Route() string {
