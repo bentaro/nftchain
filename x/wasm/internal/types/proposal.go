@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	wasmTypes "github.com/bentaro/nftchain/x/go-cosmwasm/types"
 	"strings"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -189,6 +190,7 @@ type InstantiateContractProposal struct {
 	Label     string          `json:"label"`
 	InitMsg   json.RawMessage `json:"init_msg"`
 	InitFunds sdk.Coins       `json:"init_funds"`
+	InitNfts  wasmTypes.Sentnfts `json:"init_nfts"`
 }
 
 // ProposalType returns the type
@@ -249,6 +251,7 @@ func (p InstantiateContractProposal) MarshalYAML() (interface{}, error) {
 		Label        string         `yaml:"label"`
 		InitMsg      string         `yaml:"init_msg"`
 		InitFunds    sdk.Coins      `yaml:"init_funds"`
+		InitNfts     wasmTypes.Sentnfts `yaml:"init_nfts"`
 	}{
 		WasmProposal: p.WasmProposal,
 		RunAs:        p.RunAs,
@@ -257,6 +260,7 @@ func (p InstantiateContractProposal) MarshalYAML() (interface{}, error) {
 		Label:        p.Label,
 		InitMsg:      string(p.InitMsg),
 		InitFunds:    p.InitFunds,
+		InitNfts:     p.InitNfts,
 	}, nil
 }
 
