@@ -1,6 +1,7 @@
 package types
 
 import (
+	"encoding/json"
 	"strings"
 )
 
@@ -24,6 +25,18 @@ func NewNft(denom string, id string) Sentnft {
 		Denom:  denom,
 		Id: id,
 	}
+}
+
+type sentnftsJSON Sentnfts
+
+// MarshalJSON implements a custom JSON marshaller for the Coins type to allow
+// nil Coins to be encoded as an empty array.
+func (sentnfts Sentnfts) MarshalJSON() ([]byte, error) {
+	if sentnfts == nil {
+		return json.Marshal(sentnftsJSON(Sentnfts{}))
+	}
+
+	return json.Marshal(sentnftsJSON(sentnfts))
 }
 
 //Parse 1 Nft as sentnft[]
