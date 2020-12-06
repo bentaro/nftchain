@@ -214,11 +214,12 @@ func NewEnv(ctx sdk.Context, contractAddr sdk.AccAddress) wasmTypes.Env {
 
 // NewInfo initializes the MessageInfo for a contract instance
 // add additional nft info if necessary
-func NewInfo(creator sdk.AccAddress, deposit sdk.Coins) wasmTypes.MessageInfo {
+func NewInfo(creator sdk.AccAddress, deposit sdk.Coins, nft wasmTypes.Sentnfts) wasmTypes.MessageInfo {
 	return wasmTypes.MessageInfo{
 		Sender:    creator.String(),
 		SentFunds: NewWasmCoins(deposit),
-		SentNfts: wasmTypes.Sentnfts{},
+		// might need validation
+		SentNfts: nft,
 	}
 }
 

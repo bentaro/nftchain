@@ -218,7 +218,7 @@ func (k Keeper) instantiate(ctx sdk.Context, codeID uint64, creator, admin sdk.A
 	// prepare params for contract instantiate call
 	env := types.NewEnv(ctx, contractAddress)
 	// add nft option if necessary
-	info := types.NewInfo(creator, deposit)
+	info := types.NewInfo(creator, deposit, wasmTypes.Sentnfts{})
 
 	// create prefixed data store
 	// 0x03 | contractAddress (sdk.AccAddress)
@@ -293,7 +293,7 @@ func (k Keeper) Execute(ctx sdk.Context, contractAddress sdk.AccAddress, caller 
 	}
 
 	env := types.NewEnv(ctx, contractAddress)
-	info := types.NewInfo(caller, coins)
+	info := types.NewInfo(caller, coins, NFTs)
 
 	// prepare querier
 	querier := QueryHandler{
@@ -345,7 +345,7 @@ func (k Keeper) migrate(ctx sdk.Context, contractAddress sdk.AccAddress, caller 
 
 	var noDeposit sdk.Coins
 	env := types.NewEnv(ctx, contractAddress)
-	info := types.NewInfo(caller, noDeposit)
+	info := types.NewInfo(caller, noDeposit, wasmTypes.Sentnfts{})
 
 	// prepare querier
 	querier := QueryHandler{
