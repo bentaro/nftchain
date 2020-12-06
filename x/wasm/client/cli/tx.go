@@ -169,6 +169,12 @@ func parseInstantiateArgs(args []string, cliCtx context.CLIContext) (types.MsgIn
 		return types.MsgInstantiateContract{}, err
 	}
 
+	// TO DO
+	nft, err := gowasmtypes.ParseNft("")
+	if err != nil {
+		return types.MsgInstantiateContract{}, err
+	}
+
 	label := viper.GetString(flagLabel)
 	if label == "" {
 		return types.MsgInstantiateContract{}, fmt.Errorf("Label is required on all contracts")
@@ -191,7 +197,7 @@ func parseInstantiateArgs(args []string, cliCtx context.CLIContext) (types.MsgIn
 		CodeID:    codeID,
 		Label:     label,
 		InitFunds: amount,
-		InitNfts: gowasmtypes.Sentnfts{},
+		InitNfts: nft,
 		InitMsg:   []byte(initMsg),
 		Admin:     adminAddr,
 	}
@@ -223,6 +229,9 @@ func ExecuteContractCmd(cdc *codec.Codec) *cobra.Command {
 
 			nftStr := viper.GetString(flagNft)
 			nft, err := gowasmtypes.ParseNft(nftStr)
+			if err != nil {
+				return err
+			}
 
 			execMsg := args[1]
 
