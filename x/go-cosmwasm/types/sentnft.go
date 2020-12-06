@@ -39,6 +39,20 @@ func (sentnfts Sentnfts) MarshalJSON() ([]byte, error) {
 	return json.Marshal(sentnftsJSON(sentnfts))
 }
 
+// UnmarshalJSON ensures that we get [] for empty arrays
+func (sentnfts *Sentnfts) UnmarshalJSON(data []byte) error {
+	// make sure we deserialize [] back to null
+	if string(data) == "[]" || string(data) == "null" {
+		return nil
+	}
+	var d []Sentnft
+	if err := json.Unmarshal(data, &d); err != nil {
+		return err
+	}
+	*sentnfts = d
+	return nil
+}
+
 //Parse 1 Nft as sentnft[]
 func ParseNft(nftStr string) (Sentnfts, error) {
 	nftStr = strings.TrimSpace(nftStr)
